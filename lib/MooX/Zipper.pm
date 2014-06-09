@@ -67,7 +67,6 @@ sub replace {
 sub up {
     my $self = shift;
     my $count = shift || 1;
-    
     my $zip = $self;
     for (1..$count) {
         $zip = $zip->zip->but(
@@ -103,6 +102,17 @@ sub do {
             head => $code->($_)->focus,
         );
     }
+}
+
+sub to_dirs {
+    my ($self) = @_;
+    my @dirs;
+    my $ptr = $self;
+    until ($ptr->is_top) {
+        push @dirs, $ptr->dir;
+        $ptr->up;
+    }
+    return reverse @dirs;
 }
 
 =head1 METHODS
