@@ -1,7 +1,12 @@
 package MooX::Zipper::Role::Eager;
 
+use Carp qw(carp croak);
+use Scalar::Util qw(blessed);
 use Moo::Role;
 with 'MooX::Zipper::Role::Zipper';
+use MooX::Zippable::Autobox conditional=>1;
+
+use Data::Dumper 'Dumper';
 
 has head => (
     is => 'ro',
@@ -14,6 +19,14 @@ has zip => (
 
 sub _go {
     my ($self, $dir) = @_;
+	croak("self->head cannot '$dir'")
+	    unless $self->head->can($dir);
+    croak("self->head->$dir is falsey")
+        unless $self->head->$dir;
+    warn Dumper($self);
+    warn Dumper([@_]);
+    croak("not blessed: " . Dumper $self->head->$dir)
+	    unless blessed($self->head->$dir);
     return $self->head->$dir->traverse(
         dir => $dir,
         zip => $self,

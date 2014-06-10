@@ -2,6 +2,7 @@ package MooX::Zipper::Role::Tracked;
 
 use Moo::Role;
 with 'MooX::Zipper::Role::Zipper';
+use MooX::Zippable::Autobox conditional=>1;
 
 requires qw(_go);
 

@@ -7,12 +7,12 @@ requires qw(_go);
 
 has dir => (
     is => 'ro',
-    required => 1,
+    default => sub{ undef },
 );
 
 sub go {
     my ($self, $direction) = @_;
-    my $new = $self->but(dir => [(@{$self->tracks}, $direction)]);
+    my $new = $self->but(dir => $direction);
 	return $new->_go($direction);
 }
 

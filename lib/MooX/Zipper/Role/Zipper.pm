@@ -1,7 +1,8 @@
 package MooX::Zipper::Role::Zipper;
 
 use Moo::Role;
-with 'MooX::Zipper::Role::But';
+with 'MooX::But';
+use MooX::Zippable::Autobox conditional=>1;
 requires qw(focus go up top is_top call set replace);
 
 sub dive {
